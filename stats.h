@@ -95,7 +95,7 @@ unsigned int find_median(unsigned char *ptr_to_array, unsigned int size_of_array
  * @param unsigned int size_of_array <This input indicates the size of the array (number of elements present in the array>
  *
  */
-unsigned int print_array(unsigned char *ptr_to_array, unsigned int size_of_array);
+void print_array(unsigned char *ptr_to_array, unsigned int size_of_array);
 
 
 
@@ -112,7 +112,7 @@ unsigned int print_array(unsigned char *ptr_to_array, unsigned int size_of_array
  * @param unsigned int size_of_array <This input indicates the size of the array (number of elements present in the array>
  *
  */
-unsigned int print_statistics(unsigned char *ptr_to_array, unsigned int size_of_array);
+void print_statistics(unsigned char *ptr_to_array, unsigned int size_of_array);
 
 
 
