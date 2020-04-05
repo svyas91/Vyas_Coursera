@@ -125,8 +125,11 @@ void main() {
   /* Other Variable Declarations Go Here */
   /* Statistics and Printing Functions Go Here */
 
-  int num_elements = sizeof(test)/sizeof(unsigned char);
+  //int num_elements = sizeof(test)/sizeof(unsigned char);
+  int num_elements = SIZE;
 
+  print_array(test,num_elements);
+  print_statistics(test,num_elements);
   /* EXAMPLE ON HOW TO USE THE DEFINED FUNCTIONS */
 
   /*unsigned int my_mean = find_mean(test,num_elements);
