@@ -47,6 +47,7 @@ unsigned int find_minimum(unsigned char *ptr_to_array, unsigned int size_of_arra
 		}
 		*ptr_to_array++;
 	}
+	return minimum;
 }
 
 unsigned int find_maximum(unsigned char *ptr_to_array, unsigned int size_of_array) {
@@ -73,7 +74,7 @@ void sort_array(unsigned char *ptr_to_array, unsigned int size_of_array) {
 				largest = *(ptr_to_array+j);
 			}
 		}
-			int temp = *(ptr_to_array+largest_index);
+			//int temp = *(ptr_to_array+largest_index);
 			*(ptr_to_array+largest_index) = *(ptr_to_array+i);
 			*(ptr_to_array+i) = largest;
 	}
@@ -137,6 +138,7 @@ void main() {
   print_array(test,num_elements);
   print_statistics(test,num_elements);
   sort_array(test,num_elements);*/
+  return;
 }
 
 /* Add other Implementation File Code Here */
