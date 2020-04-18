@@ -23,7 +23,8 @@
 
 
 #include <stdio.h>
-#include "stats.h"
+#include "./../include/common/platform.h"
+#include "./../include/common/stats.h"
 
 /* Size of the Data Set */
 #define SIZE (40)
@@ -85,19 +86,19 @@ unsigned int find_median(unsigned char *ptr_to_array, unsigned int size_of_array
 	unsigned int median;
 	sort_array(ptr_to_array,size_of_array);
 	if ((size_of_array%2) == 0) {
-		median = (*(ptr_to_array + (size_of_array/2)) + *(ptr_to_array + (size_of_array/2) + 1))/2;
+		median = (*(ptr_to_array + (size_of_array/2)) + *(ptr_to_array + (size_of_array/2) - 1))/2;
 	}
 	else {
 		median = *(ptr_to_array + (size_of_array/2));
 	}
-	printf("%d\n",median);
+	//PRINTF("%d\n",median);
 	return median;
 }
 
 
 void print_array(unsigned char *ptr_to_array, unsigned int size_of_array) {
 	for (int i = 0; i < size_of_array; i++) {
-		printf(" Value of the element at index %d is: %d  \n",i,*(ptr_to_array+i));
+		PRINTF(" Value of the element at index %d is: %d  \n",i,*(ptr_to_array+i));
 	}
 }
 
@@ -107,10 +108,10 @@ void print_statistics(unsigned char *ptr_to_array,unsigned int size_of_array) {
 	maximum = find_maximum(ptr_to_array,size_of_array);
 	mean = find_mean(ptr_to_array,size_of_array);
 	median = find_median(ptr_to_array,size_of_array);
-	printf("***** Minimum value of all the elements in the array is: %d *****\n",minimum);
-	printf("***** Maximum value of all the elements in the array is: %d *****\n",maximum);
-	printf("***** Mean value of the elements in the array is:        %d *****\n",mean);
-	printf("***** Median value of the array is: 			 %d *****\n",median);
+	PRINTF("***** Minimum value of all the elements in the array is: %d *****\n",minimum);
+	PRINTF("***** Maximum value of all the elements in the array is: %d *****\n",maximum);
+	PRINTF("***** Mean value of the elements in the array is:        %d *****\n",mean);
+	PRINTF("***** Median value of the array is: 			 %d *****\n",median);
 }
 
 		
@@ -129,15 +130,16 @@ void main() {
   //int num_elements = sizeof(test)/sizeof(unsigned char);
   int num_elements = SIZE;
 
-  /* EXAMPLE ON HOW TO USE THE DEFINED FUNCTIONS */
 
-  /*unsigned int my_mean = find_mean(test,num_elements);
+  unsigned int my_mean = find_mean(test,num_elements);
   unsigned int maximum = find_maximum(test,num_elements);
   unsigned int minimum = find_minimum(test,num_elements);
   unsigned int median = find_median(test,num_elements);
-  print_array(test,num_elements);
-  print_statistics(test,num_elements);
-  sort_array(test,num_elements);*/
+  #ifdef VERBOSE
+      print_array(test,num_elements);
+      print_statistics(test,num_elements);
+  #endif
+  sort_array(test,num_elements);
   return;
 }
 
