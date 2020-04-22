@@ -47,4 +47,46 @@ void set_all(char * ptr, char value, unsigned int size){
 void clear_all(char * ptr, unsigned int size){
   set_all(ptr, 0, size);
 }
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length) { 
+	unsigned int i;
+	for (i = 0; i < length; i++) {
+		*(dst+i) = *(src+i);
+	}
+	return dst;
+}
 
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value) {
+	unsigned int i;
+	for (i = 0; i < length; i++) {
+		*(src+i) = value;
+	}
+	return src;
+}
+
+uint8_t * my_memzero(uint8_t * src, size_t length) {
+	unsigned int i;
+	for (i = 0; i < length; i++) {
+		*(src+i) = 0;
+	}
+	return src;
+}
+
+uint8_t * my_reverse(uint8_t * src, size_t length) {
+	unsigned int i;
+	uin8_t temp;
+	for (i = 0; i < length/2; i++) {
+		temp = *(ptr+i);
+		*(ptr+i) = *(ptr+(length-1-i));
+		*(ptr+(length-1-i)) = temp;
+	}
+	return src;
+}
+
+int32_t * reserve_words(size_t length) {
+	int32_t * ptr = (int32_t *)malloc(4*length);
+	return ptr;
+}
+
+void free_words(int32_t * src) {
+	free((void *)src);
+}

@@ -22,14 +22,41 @@
  */
 /*#include "platform.h"
 #include "memory.h"
-#include "course1.h"
+//#include "course1.h)"
 
 #define MAX_LENGTH (10)
 char buffer[MAX_LENGTH];*/
 
 #include "course1.h"
-
+//#include <stdio.h>
+//#include "./../include/common/memory.h"
+//#include <stdlib.h>
 int main() {
+	/*char a[10] = {'a','b','c','d','e','f','g','h','i','j'};
+	char b[3] = {'b','c','d'};
+	char *ptr = &a[0];
+	char *ptr2 = b;
+       printf("PTR VALUE IS %c\n",*ptr);	
+       printf("PTR VALUE IS %c\n",*ptr2);	
+
+	int length = 10;
+	char temp;
+	for (int i = 0; i < length/2; i++) {
+		temp = *(ptr+i);
+		*(ptr+i) = *(ptr+(length-1-i));
+		*(ptr+(length-1-i)) = temp;
+	}
+	for (int k =0;k<length;k++) {
+		printf("value is %c\n",*(ptr+k));
+	}
+	int * dynamic_ptr = (int *)malloc(4);
+//	*dynamic_ptr = 10;
+	if (dynamic_ptr == NULL) {
+		printf("NULL PTR \n");
+	}
+	printf("Dyname is %d\n",*(dynamic_ptr+1));
+	free((void *)dynamic_ptr);
+	printf("Dyname is %d\n",*dynamic_ptr);*/
 	#ifdef COURSE1
        	    course1();
 	#endif	
