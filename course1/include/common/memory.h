@@ -90,4 +90,34 @@ void set_all(char * ptr, char value, unsigned int size);
  */
 void clear_all(char * ptr, unsigned int size);
 
+
+/**
+ * @brief Moves data from source to destimation
+ *
+ * Given a source pointer & destination pointer, moves data from the source to the destination based on the # of bytes given
+ *
+ * @param src Pointer to source 
+ * @param dst Pointer to destination
+ * @param length Number of bytes to move
+ *
+ * @return pointer to the destination.
+ */
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);
+
+
+/**
+ * @brief Sets the value pointed by the src pointer
+ *
+ * Given a source pointer, number of bytes and value, sets the number of bytes starting from the src pointer to be 'value'
+ *
+ * @param src Pointer to source 
+ * @param length Number of bytes
+ * @param value Value to be set
+ *
+ * @return pointer to the source
+ */
+uint8_t * my_memset(uint8_t * src, size_t length,uint8_t value );
+
 #endif /* __MEMORY_H__ */
+
+
