@@ -21,7 +21,7 @@
  *
  */
 #include "memory.h"
-
+//#include "course1.h"
 /***********************************************************
  Function Definitions
 ***********************************************************/
@@ -49,6 +49,55 @@ void clear_all(char * ptr, unsigned int size){
 }
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length) { 
 	unsigned int i;
+	unsigned int j;
+	/*for (i = 0; i < length; i++) {
+		*(temp+i) = *(src+i);
+	}*/
+	if (-length < src - dst <= length) {
+		int32_t * temp = reserve_words(length);
+		for (i = 0; i < length; i++) {
+			*(temp+i) = *(src+i);
+		}
+		for (j = 0; j < length; j++) {
+			*(dst+j) = *(temp+j);
+		}
+		free_words((uint32_t*)temp);
+	}
+	else {
+		for (i = 0; i < length; i++) {
+			*(dst+i) = *(src+i);
+		}
+	}
+
+/*	if (src <= dst) {
+		if (dst - src <= length) {
+			int32_t * temp = reserve_words(length);
+			for (i = 0; i < length; i++) {
+				*(temp+i) = *(src+i);
+			}
+	for (j = 0; j < length; j++) {
+		*(dst+j) = *(temp+j);
+	}
+		}
+	}	
+	else {
+		if (src - dst <= length) {
+			int32_t * temp = reserve_words(length);
+			for (i = 0; i < length; i++) {
+				*(temp+i) = *(src+i);
+			}
+	for (j = 0; j < length; j++) {
+		*(dst+j) = *(temp+j);
+	}
+		}
+	}	
+*/
+	return dst;
+}
+
+
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length) {
+	unsigned int i;
 	for (i = 0; i < length; i++) {
 		*(dst+i) = *(src+i);
 	}
@@ -73,11 +122,11 @@ uint8_t * my_memzero(uint8_t * src, size_t length) {
 
 uint8_t * my_reverse(uint8_t * src, size_t length) {
 	unsigned int i;
-	uin8_t temp;
+	uint8_t temp;
 	for (i = 0; i < length/2; i++) {
-		temp = *(ptr+i);
-		*(ptr+i) = *(ptr+(length-1-i));
-		*(ptr+(length-1-i)) = temp;
+		temp = *(src+i);
+		*(src+i) = *(src+(length-1-i));
+		*(src+(length-1-i)) = temp;
 	}
 	return src;
 }
@@ -87,6 +136,6 @@ int32_t * reserve_words(size_t length) {
 	return ptr;
 }
 
-void free_words(int32_t * src) {
+void free_words(uint32_t * src) {
 	free((void *)src);
 }

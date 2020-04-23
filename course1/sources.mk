@@ -11,9 +11,12 @@
 
 PLATFORM = HOST
 ifeq ($(PLATFORM),HOST)
-	SOURCES = main.c \
-		  memory.c 
-	INCLUDES = -I./../include/common 
+	SOURCES = ./src/main.c \
+		  ./src/course1.c \
+		  ./src/stats.c \
+		  ./src/memory.c 
+	INCLUDES = -I./include/common \
+		   -I./src
 else
 	SOURCES = main.c \
 		  memory.c \

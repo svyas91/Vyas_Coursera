@@ -46,10 +46,12 @@ LINKER_FILE=msp432p401r.lds
 TARGET=c1m2
 GENERAL_FLAGS = -g \
 		-Wall \
-		-Werror \
 		-O0 \
+		-DVERBOSE \
+		-DCOURSE1 \
 		-D$(PLATFORM) \
 		-std=c99
+		#-Werror \
 
 ifeq ($(PLATFORM),HOST)
 	#Architecture Specific Flags

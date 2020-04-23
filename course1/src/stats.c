@@ -98,7 +98,9 @@ unsigned int find_median(unsigned char *ptr_to_array, unsigned int size_of_array
 
 void print_array(unsigned char *ptr_to_array, unsigned int size_of_array) {
 	for (int i = 0; i < size_of_array; i++) {
+  	#ifdef VERBOSE
 		PRINTF(" Value of the element at index %d is: %d  \n",i,*(ptr_to_array+i));
+	#endif
 	}
 }
 
@@ -108,15 +110,17 @@ void print_statistics(unsigned char *ptr_to_array,unsigned int size_of_array) {
 	maximum = find_maximum(ptr_to_array,size_of_array);
 	mean = find_mean(ptr_to_array,size_of_array);
 	median = find_median(ptr_to_array,size_of_array);
+ 	 #ifdef VERBOSE
 	PRINTF("***** Minimum value of all the elements in the array is: %d *****\n",minimum);
 	PRINTF("***** Maximum value of all the elements in the array is: %d *****\n",maximum);
 	PRINTF("***** Mean value of the elements in the array is:        %d *****\n",mean);
 	PRINTF("***** Median value of the array is: 			 %d *****\n",median);
+	#endif
 }
 
 		
 
-void main() {
+/*int main() {
 
   unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
                               114, 88,   45,  76, 123,  87,  25,  23,
@@ -124,23 +128,23 @@ void main() {
                               201,   6,  12,  60,   8,   2,   5,  67,
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
-  /* Other Variable Declarations Go Here */
+ */ /* Other Variable Declarations Go Here */
   /* Statistics and Printing Functions Go Here */
 
   //int num_elements = sizeof(test)/sizeof(unsigned char);
-  int num_elements = SIZE;
+ /* int num_elements = SIZE;
 
-
-  unsigned int my_mean = find_mean(test,num_elements);
+*/
+  /*unsigned int my_mean = find_mean(test,num_elements);
   unsigned int maximum = find_maximum(test,num_elements);
   unsigned int minimum = find_minimum(test,num_elements);
-  unsigned int median = find_median(test,num_elements);
-  #ifdef VERBOSE
+  unsigned int median = find_median(test,num_elements);*/
+ /* #ifdef VERBOSE
       print_array(test,num_elements);
       print_statistics(test,num_elements);
   #endif
-  sort_array(test,num_elements);
-  return;
-}
+  //sort_array(test,num_elements);
+  return 0;
+}*/
 
 /* Add other Implementation File Code Here */

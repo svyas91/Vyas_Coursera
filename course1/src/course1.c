@@ -21,10 +21,10 @@
 #include "course1.h"
 #include "platform.h"
 #include "memory.h"
-#include "data.h"
+//#include "data.h"
 #include "stats.h"
 
-int8_t test_data1() {
+/*int8_t test_data1() {
   uint8_t * ptr;
   int32_t num = -4096;
   uint32_t digits;
@@ -81,7 +81,7 @@ int8_t test_data2() {
   }
   return TEST_NO_ERROR;
 }
-
+*/
 int8_t test_memmove1() {
   uint8_t i;
   int8_t ret = TEST_NO_ERROR;
@@ -327,15 +327,21 @@ void course1(void)
   int8_t failed = 0;
   int8_t results[TESTCOUNT];
 
-  results[0] = test_data1();
-  results[1] = test_data2();
+  results[0] = test_memmove1();
+  results[1] = test_memmove2();
+  results[2] = test_memmove3();
+  results[3] = test_memcopy();
+  results[4] = test_memset();
+  results[5] = test_reverse();
+  //results[0] = test_data1();
+  /*results[1] = test_data2();
   results[2] = test_memmove1();
   results[3] = test_memmove2();
   results[4] = test_memmove3();
   results[5] = test_memcopy();
   results[6] = test_memset();
   results[7] = test_reverse();
-
+*/
   for ( i = 0; i < TESTCOUNT; i++) 
   {
     failed += results[i];

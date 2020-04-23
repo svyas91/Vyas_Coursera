@@ -32,57 +32,8 @@ char buffer[MAX_LENGTH];*/
 //#include "./../include/common/memory.h"
 //#include <stdlib.h>
 int main() {
-	/*char a[10] = {'a','b','c','d','e','f','g','h','i','j'};
-	char b[3] = {'b','c','d'};
-	char *ptr = &a[0];
-	char *ptr2 = b;
-       printf("PTR VALUE IS %c\n",*ptr);	
-       printf("PTR VALUE IS %c\n",*ptr2);	
-
-	int length = 10;
-	char temp;
-	for (int i = 0; i < length/2; i++) {
-		temp = *(ptr+i);
-		*(ptr+i) = *(ptr+(length-1-i));
-		*(ptr+(length-1-i)) = temp;
-	}
-	for (int k =0;k<length;k++) {
-		printf("value is %c\n",*(ptr+k));
-	}
-	int * dynamic_ptr = (int *)malloc(4);
-//	*dynamic_ptr = 10;
-	if (dynamic_ptr == NULL) {
-		printf("NULL PTR \n");
-	}
-	printf("Dyname is %d\n",*(dynamic_ptr+1));
-	free((void *)dynamic_ptr);
-	printf("Dyname is %d\n",*dynamic_ptr);*/
 	#ifdef COURSE1
        	    course1();
 	#endif	
+	return 0;
 }
-/* A pretty boring main file */
-/*int main(void) {
-  unsigned int i;
-  char value;
-*/
-  /* Code below does some arbitrary memory Reads & writes */
- /* clear_all(buffer, MAX_LENGTH);
-  set_all( ( buffer + 8 ), 43, 2); 
-  set_value(buffer, 0, 0x61);
-  value = get_value(buffer, 9);
-  set_value(buffer, 9, (value + 0x27));
-  set_value(buffer, 3, 0x37);
-  set_value(buffer, 1, 88);
-  set_value(buffer, 4, '2');
-  value = get_value(buffer, 1);
-  set_value(buffer, 2, 121);
-  set_value(buffer, 7, (value - 12));
-  set_value(buffer, 5, 0x5F);
-
-  for ( i = 0; i < MAX_LENGTH; i++ ){
-    PRINTF("%c", buffer[i]);
-  }
-  PRINTF("\n");
-  return 0;*/
-
