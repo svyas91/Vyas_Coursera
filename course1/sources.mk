@@ -14,6 +14,7 @@ ifeq ($(PLATFORM),HOST)
 	SOURCES = ./src/main.c \
 		  ./src/course1.c \
 		  ./src/stats.c \
+		  ./src/data.c \
 		  ./src/memory.c 
 	INCLUDES = -I./include/common \
 		   -I./src

@@ -1,64 +1,36 @@
-#******************************************************************************
-# Copyright (C) 2017 by Alex Fosdick - University of Colorado
-#
-# Redistribution, modification or use of this software in source or binary
-# forms is permitted as long as the files maintain this copyright. Users are 
-# permitted to modify this and use it to learn about the field of embedded
-# software. Alex Fosdick and the University of Colorado are not liable for any
-# misuse of this material. 
-#
-#*****************************************************************************
+#include "data.h"
+#include "memory.h"
 
-#------------------------------------------------------------------------------
-# Simple makefile for the cortex-M0+ build system
-#
-# Use: make [TARGET] [OVERRIDES]
-#
-# Build Targets:
-#      <FILE>.o - Builds <FILE>.o object file
-#      build - Builds and links all source files
-#      all - Same as build
-#      clean - removes all generated files
-#
-# Overrides:
-#      CPU - ARM Cortex Architecture (cortex-m0plus, cortex-m4)
-#      ARCH - ARM Architecture (arm, thumb)
-#      SPECS - Specs file to give the linker (nosys.specs, nano.specs)
-#
-#
-#------------------------------------------------------------------------------
-include sources.mk
+uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base) {
+	unsigned int rem;
+	size_t i = 0;
+	if (base <= 10) {
+		while (data !=0 ) {
+			rem = data%base;
+			data = data/base;
+			*(ptr+i) = rem;
+			i++;
+			//PRINTF("REM IS %d\n",rem);
+		}
+	my_reverse(ptr,i);
+	*(ptr+i) = '\0';
+	for (int j =0; j < i; j++) {
+		PRINTF("ITOA is %d\n",*(ptr+j)); }
 
-# Architecture Specific Flags
-CPU = cortex-m0plus
-ARCH = thumb
-SPECS = nosys.specs
+}
+i = i + 1;
+	return i;
+	}
 
-# Platform Specific Flags
-LINKER_FILE = MKL25Z128xxx4_flash.ld 
-
-# Compile Defines
-CC = arm-none-eabi-gcc
-LD = arm-none-eabi-ld
-TARGET = demo
-LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE)
-CFLAGS = -mcpu=$(CPU) -m$(ARCH) --specs=$(SPECS) -Wall
-
-OBJS = $(SRCS:.c=.o)
-
-%.o : %.c
-	$(CC) -c $< $(CFLAGS) -o $@
-
-#.PHONY: build
-#build: all
-
-#.PHONY: all
-#all: $(TARGET).out
-
-#$(TARGET).out: $(OBJS)
-	#$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
-
-#.PHONY: clean
-#clean:
-	#rm -f $(OBJS) $(TARGET).out $(TARGET).map
-
+int32_t my_atoi(uint8_t * ptr, uint8_t digits, uint32_t base) {
+	int32_t x = 0;
+	unsigned int i;
+	PRINTF("DIGITS IS %d\n",digits);
+	for (i = 0; i < digits; i++) {
+		if (*(ptr+i) != '\0') {
+			PRINTF("X is %d\n",x);
+			x = (x*base) + (*(ptr+i));
+		}
+	}
+	return x;
+}
