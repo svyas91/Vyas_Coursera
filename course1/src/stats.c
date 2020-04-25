@@ -43,10 +43,10 @@ unsigned int find_mean(unsigned char* ptr_to_array, unsigned int size_of_array) 
 unsigned int find_minimum(unsigned char *ptr_to_array, unsigned int size_of_array) {
 	unsigned int minimum = *ptr_to_array;
 	for (int i=1;i<size_of_array;i++) {
-		if (*(ptr_to_array+1) < minimum) {
-			minimum = *(ptr_to_array+1);
+		if (*(ptr_to_array+i) < minimum) {
+			minimum = *(ptr_to_array+i);
 		}
-		*ptr_to_array++;
+//		*ptr_to_array++;
 	}
 	return minimum;
 }
@@ -54,10 +54,10 @@ unsigned int find_minimum(unsigned char *ptr_to_array, unsigned int size_of_arra
 unsigned int find_maximum(unsigned char *ptr_to_array, unsigned int size_of_array) {
 	unsigned int maximum = *ptr_to_array;
 	for (int i=1;i<size_of_array;i++) {
-		if (*(ptr_to_array+1) > maximum) {
-			maximum = *(ptr_to_array+1);
+		if (*(ptr_to_array+i) > maximum) {
+			maximum = *(ptr_to_array+i);
 		}
-		*ptr_to_array++;
+	//	*ptr_to_array++;
 	}
 	return maximum;
 }

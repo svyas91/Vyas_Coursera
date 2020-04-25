@@ -34,6 +34,8 @@ include sources.mk
 
 # Platform Overrides
 PLATFORM=HOST
+COURSE=COURSE1
+PRINT=VERBOSE
 
 # Architectures Specific Flags
 #LINKER_FILE = 
@@ -47,11 +49,13 @@ TARGET=c1m2
 GENERAL_FLAGS = -g \
 		-Wall \
 		-O0 \
-		-DVERBOSE \
-		-DCOURSE1 \
 		-D$(PLATFORM) \
-		-std=c99
-		#-Werror \
+		-D$(COURSE) \
+		-D$(PRINT) \
+		-std=c99 \
+		-Werror 
+		#-DVERBOSE \
+		#-DCOURSE1 \
 
 ifeq ($(PLATFORM),HOST)
 	#Architecture Specific Flags

@@ -53,7 +53,7 @@ uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length) {
 	/*for (i = 0; i < length; i++) {
 		*(temp+i) = *(src+i);
 	}*/
-	if (-length < src - dst <= length) {
+	if (-length < (src - dst) || (src-dst)<= length) {
 		int32_t * temp = reserve_words(length);
 		for (i = 0; i < length; i++) {
 			*(temp+i) = *(src+i);
