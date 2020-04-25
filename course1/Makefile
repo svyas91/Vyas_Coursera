@@ -45,7 +45,7 @@ SPECS = nosys.specs
 
 # Compiler Flags and Defines
 LINKER_FILE=msp432p401r.lds
-TARGET=c1m2
+TARGET=course1
 GENERAL_FLAGS = -g \
 		-Wall \
 		-O0 \
