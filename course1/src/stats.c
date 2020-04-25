@@ -105,16 +105,21 @@ void print_array(unsigned char *ptr_to_array, unsigned int size_of_array) {
 }
 
 void print_statistics(unsigned char *ptr_to_array,unsigned int size_of_array) {
-	unsigned int mean,median,maximum,minimum;
+ 	#ifdef VERBOSE
+	/*unsigned int mean,median,maximum,minimum;
 	minimum = find_minimum(ptr_to_array,size_of_array);
 	maximum = find_maximum(ptr_to_array,size_of_array);
 	mean = find_mean(ptr_to_array,size_of_array);
-	median = find_median(ptr_to_array,size_of_array);
- 	 #ifdef VERBOSE
-	PRINTF("***** Minimum value of all the elements in the array is: %d *****\n",minimum);
+	median = find_median(ptr_to_array,size_of_array);*/
+	PRINTF("***** Minimum value of all the elements in the array is: %d *****\n",find_minimum(ptr_to_array,size_of_array));
+	PRINTF("***** Maximum value of all the elements in the array is: %d *****\n",find_maximum(ptr_to_array,size_of_array));
+	PRINTF("***** Mean value of the elements in the array is:        %d *****\n",find_mean(ptr_to_array,size_of_array));
+	PRINTF("***** Median value of the array is: 			 %d *****\n",find_median(ptr_to_array,size_of_array));
+/*	PRINTF("***** Minimum value of all the elements in the array is: %d *****\n",minimum);
 	PRINTF("***** Maximum value of all the elements in the array is: %d *****\n",maximum);
 	PRINTF("***** Mean value of the elements in the array is:        %d *****\n",mean);
 	PRINTF("***** Median value of the array is: 			 %d *****\n",median);
+*/
 	#endif
 }
 

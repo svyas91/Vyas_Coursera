@@ -123,12 +123,50 @@ uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
  */
 uint8_t * my_memset(uint8_t * src, size_t length,uint8_t value );
 
+/**
+ * @brief Sets the value to zero pointed by the src pointer
+ *
+ * Given a source pointer and number of bytes, sets the number of bytes starting from the src pointer to be 0
+ *
+ * @param src Pointer to source 
+ * @param length Number of bytes
+ *
+ * @return pointer to the source
+ */
 uint8_t * my_memzero(uint8_t * src, size_t length);
 
+/**
+ * @brief Reverses the order of the bytes
+ *
+ * Given a source pointer and number of bytes, reverses the order of the bytes
+ *
+ * @param src Pointer to source 
+ * @param length Number of bytes
+ *
+ * @return pointer to the source
+ */
 uint8_t * my_reverse(uint8_t * src, size_t length);
 
+/**
+ * @brief Allocates dynamic memory
+ *
+ * Given number of bytes, dynamically reserve memory for the same number of bytes
+ *
+ * @param Number of bytes
+ *
+ * @return pointer to the reserved memory
+ */
 int32_t * reserve_words(size_t length);
 
+/**
+ * @brief Free memory
+ *
+ * Given pointer to a src pointing to a memory, free the dynamically allocated memory
+ *
+ * @param pointer to the src
+ *
+ * @return void - nothing is returned
+ */
 void free_words(uint32_t * src);
 
 

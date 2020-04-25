@@ -19,14 +19,18 @@ ifeq ($(PLATFORM),HOST)
 	INCLUDES = -I./include/common \
 		   -I./src
 else
-	SOURCES = main.c \
-		  memory.c \
-	  	  interrupts_msp432p401r_gcc.c \
-	  	  startup_msp432p401r_gcc.c \
-	  	  system_msp432p401r.c 
-	INCLUDES = -I./../include/common \
-		   -I./../include/msp432 \
-		   -I./../include/CMSIS 
+	SOURCES = ./src/main.c \
+		  ./src/course1.c \
+		  ./src/stats.c \
+		  ./src/data.c \
+		  ./src/memory.c \
+	  	  ./src/interrupts_msp432p401r_gcc.c \
+	  	  ./src/startup_msp432p401r_gcc.c \
+	  	  ./src/system_msp432p401r.c 
+	INCLUDES = -I./include/common \
+		   -I./include/msp432 \
+		   -I./src \
+		   -I./include/CMSIS 
 
 endif
 

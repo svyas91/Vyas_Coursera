@@ -70,7 +70,7 @@ else
 	CC=arm-none-eabi-gcc
 	OBJ_DUMP = arm-none-eabi-objdump
 	SIZE_UTILITY = arm-none-eabi-size
-	LDFLAGS=-Wl,-Map=$(TARGET).map -LD -T ./../$(LINKER_FILE)
+	LDFLAGS=-Wl,-Map=$(TARGET).map -LD -T ./$(LINKER_FILE)
 	CFLAGS = -mcpu=$(CPU) \
 		 -m$(ARCH) \
 		 -march=armv7e-m \
