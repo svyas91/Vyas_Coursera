@@ -9,13 +9,11 @@
 #
 #*****************************************************************************
 
-# Source File Variable
-SOURCES = src/main.c src/memory.c src/data.c src/stats.c src/course1.c
+# Add your Source files to this variable
+SOURCES:= ./src/main.c ./src/memory.c ./src/interrupts_msp432p401r_gcc.c ./src/startup_msp432p401r_gcc.c ./src/system_msp432p401r.c ./src/stats.c ./src/course1.c ./src/data.c 
 
-# Include Paths (Platform Specific)
+# Add your include paths to this variable
+INCLUDES :=  -I ./include/common \
+            -I ./include/CMSIS \
+            -I ./include/msp432 \
 
-ifeq ($(PLATFORM),MSP432)
-	INCLUDES = -Iinclude/common -Iinclude/msp432 -Iinclude/CMSIS
-else
-	INCLUDES = -Iinclude/common
-endif

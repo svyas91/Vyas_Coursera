@@ -8,98 +8,122 @@
 # misuse of this material. 
 #
 #*****************************************************************************
-#  @Author Jeevaraam Kumar
-#  @Date April 28 2020
+
 #------------------------------------------------------------------------------
-# Makefile to Compile executable for Two different platforms using Command Line Argument Input
+# <Put a Description Here>
 #
 # Use: make [TARGET] [PLATFORM-OVERRIDES]
 #
 # Build Targets:
-#      %.i - Produce C Preprocessor Expanded File 
-#	   %.d - Produce Dependency File for given input file
-#	   %.asm - Produce Assembly code for the given input file
-#	   %.o - Produce Compiled object file but not linked for given input file
-#	   compile-all - Compiles all the Source files given in Sources input variable
-#	   build - Compiles and links all files and produce a single output file (Dependency files, object files and Memory map files are generated)
-#      clean - Deletes all the files that are produced as a result of one or more above operations
+#      <Put a description of the supported targets here>
 #
 # Platform Overrides:
-#      HOST - The operations are automatically selected for producing host specific outputs
-#	   MSP432  - The operations are automatically selected for producing ARM CORTEX-M4 specific outputs
-#    
-#      Note - If no platform override is mentioned HOST is taken as default
+#      <Put a description of the supported Overrides here
+#
+# Course : Decides which COURSE to compile and build the project. Available options COURSE=COURSE1
+# VERBOSE : Decides compile, build debug. Available options : 1/0
 #------------------------------------------------------------------------------
 include sources.mk
 
-# Platform Overrides
-PLATFORM ?= HOST
+# Makefile Flags
+OBJDIR := output
+OBJS=$(SOURCES:.c=.o)
+# Platform Overrides & Architecture Specific Flags
+#LINKER_FILE CPU ARCH SPECS
+######## Compiler Flags and Defines###############
 
-# Architectures Specific Flags
-
-LINKER_FILE = msp432p401r.lds
-CPU = cortex-m4
-ARCH = thumb
-SPECS = nosys.specs
-
-#Common Flags
-TARGET = course1
-CPPFLAGS = -D$(PLATFORM) -DVERBOSE -DCOURSE1
-FLAGS = -Wall -Werror -g -O0 -std=c99
-
-# Compiler Flags and Defines
 ifeq ($(PLATFORM),MSP432)
-    # FLAGS for MSP432 
-	CC = arm-none-eabi-gcc
-	LD = arm-none-eabi-ld
-	LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE)
-	CFLAGS = $(CPPFLAGS) -mcpu=$(CPU) -m$(ARCH) -march=armv7e-m -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=$(SPECS) $(FLAGS)
-	DMP = arm-none-eabi-objdump -d
-else
-	#FLAGS for HOST
-	CC = gcc
-	LD = ld
-	LDFLAGS = -Wl,-Map=$(TARGET).map
-	CFLAGS = $(CPPFLAGS) $(FLAGS)
-	DMP = objdump -d
+CPU = cortex-m4
+ARCH = arm
+LINKER_FILE = msp432p401r.lds
+CC = arm-none-eabi-gcc
+CFLAGS = -g -Wall -Werror -O0 -std=c99
+LDFLAGS = -mcpu=cortex-m4 -mthumb -march=armv7e-m -mfloat-abi=hard \
+	-mfpu=fpv4-sp-d16 --specs=nosys.specs \
+	-T$(LINKER_FILE) -D$(PLATFORM) 
+TARGET = MSP432
+COBJD = arm-none-eabi-objdump
 endif
 
-#Flies collection for .o Files
-OBJS = $(SOURCES:.c=.o)
+ifeq ($(PLATFORM),HOST)
+ARCH = $(shell arch)
+TARGET = DHOST
+CC =gcc
+CFLAGS = -g -Wall -Werror -O0 -std=c99 \
+	-D$(PLATFORM) 
+SOURCES:= ./src/main.c ./src/memory.c ./src/stats.c \
+	./src/course1.c ./src/data.c 
+OBJS=$(SOURCES:.c=.o)
+COBJD = objdump
+endif
 
-#Files collection for Dependency Files
-DEBS = $(SOURCES:.c=.d)
+ifeq ($(VERBOSE), 1)
+CFLAGS += -DVERBOSE
+endif
+#Set default to 1
+COURSE ?=1
+ifeq ($(COURSE), 1)
+CFLAGS += -DCOURSE1
+endif
 
-#Compiles all files but not linked
-.PHONY: compile-all
-compile-all:$(OBJS)
+####################################################
+# Generates an Object directory to place objects in
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+####################################################
 
-#Produces object file for given input file
+################ General Implementation #############
 %.o : %.c
-	$(CC) $(INCLUDES) -c $< $(CFLAGS) -o $@
+	@echo ===============================
+	@echo Generating .o files
+	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ -c $<
+##################################################
 
-#Produces Assembly file for given input file
+################ ASM FIle #############
 %.asm : %.c
-	$(CC) $(INCLUDES) -S $< $(CFLAGS) -o $@
+	@echo ===============================
+	@echo Generating ASM files
+	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ -c $< -S
+##################################################
 
-#Produces Preprocessor expanded file for given input file
+################ ASM FIle for Project.out #############
+%.asm : %.out
+	@echo ===============================
+	@echo Generating ASM files for Project.out
+	$(COBJD) -S --disassemble c1m2.out > c1m2.asm
+##################################################
+
+################ Process File Implementation #############
 %.i : %.c
-	$(CC) $(INCLUDES) -E $< $(CFLAGS) -o $@
+	@echo ==============================
+	@echo Generating .o files
+	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ -c $< -E
+##################################################
 
-#Generates Dependency File for given input file
-%.d : %.c
-	$(CC) $(INCLUDES) -M $< $(CFLAGS) -o $@
+################ Compile All Impl #############
+.PHONY: compile-all
+compile-all:  
+	@echo ===============================
+	@echo Generating .o files
+	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -c $(SOURCES)
+##################################################
 
-#Compiles and links all the files to single executable file
+################ MAKE AND BUILD ALL  #############
 .PHONY: build
-build: $(DEBS) $(TARGET).out
+build: all 
+.PHONY: all 
+all: c1m2.out
+c1m2.out: $(OBJS)  
+	@echo ==============================
+	@echo Building/Making All
+	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o c1m2.out $(OBJS)  -lm -Wl,-Map=c1m2.map
+##################################################
 
-$(TARGET).out:$(OBJS) 
-	$(CC) $(INCLUDES) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
-	$(DMP) $(TARGET).out > $(TARGET).asm
-	size $(TARGET).out 
-	
-#Cleans the compiler generated files in the folder
-.PHONY: clean
-clean:
-	rm -f $(OBJS) $(TARGET).out $(TARGET).map $(TARGET).asm $(SOURCES:.c=.i) $(SOURCES:.c=.asm) $(SOURCES:.c=.d)
+
+################ Compile All Impl #############
+.PHONY: clean 
+clean:  
+	@echo ===============================
+	@echo Cleaning the directory 
+	rm -rf ./src/*.o src/*.map ./src/*.i ./src/*.asm src/*.out *.o *.out *.map 
+##################################################
