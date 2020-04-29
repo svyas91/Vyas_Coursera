@@ -9,109 +9,124 @@
  *
  *****************************************************************************/
 /**
- * @file stats.c
- * @brief Implementation of Statistics operation using C Code
+ * @file <Add File Name> 
+ * @brief <Add Brief Description Here >
  *
- * @author Jeevaraam Kumar
- * @date 03-Apr-2020
+ * <Add Extended Description Here>
+ *
+ * @author <Add FirsName LastName>
+ * @date <Add date >
  *
  */
- 
 #ifndef __STATS_H__
 #define __STATS_H__
 
 /* Add Your Declarations and Function Comments here */ 
 
 /**
- * @brief Print the Mean, Median and Mode of given array
- *  
- * The function calls the corresponding statistical functions for calculation of Mean, Median and Mode of given array
+ * @brief Prints out statistics of data array 
  *
- * @param arr Input array
- * @param length Length of the array
+ * Prints out minimum, maximum, mean and median for the elements
+ * in the data array input
  *
- * @return void
+ * @param array - Data array to be analyzed.
+ *
+ * @return none.
+ */
+void print_statistics( unsigned char *array, int length);
+
+/**
+ * @brief Prints out elements of data array 
+ *
+ * Given an array of data and a length, prints the array to the screen
+ *
+ *
+ * @param array - Data array to be printed.
+ *
+ * @return none.
  */
 
- void print_statistics(unsigned char arr[], int length);
- 
- /**
- * @brief Print the Input array values 
- *  
- * The function prints the array values given as input to the function
+void print_array(unsigned char *array, int length);
+
+
+/**
+ * @brief Calculates median of array
  *
- * @param arr Input array
- * @param length Length of the array
+ * Given an array of data and a length, returns the median value
  *
- * @return void
+ *
+ * @param array - Data array for which median will be calculated
+ *
+ * @return median value
  */
 
- void print_array(unsigned char arr[],int length);
- 
- /**
- * @brief Calculate the median and return the median of given array
- *  
- * The function takes the array and length input and calculates the median of the given array values
+unsigned char find_median(unsigned char *array, int length);
+
+
+/**
+ * @brief Calculates mean of array
  *
- * @param arr Input array
- * @param length Length of the array
+ * Given an array of data and a length, returns the mean value
  *
- * @return median value of the given array
+ * @param array - Data array for which mean will be calculated
+ *
+ * @return mean value
  */
- 
- char find_median(unsigned char arr[], int length);
- 
- /**
- * @brief Calculate the mean and return the mean of given array
- *  
- * The function takes the array and length input and calculates the mean of the given array values
+
+unsigned char find_mean(unsigned char *array, int length);
+
+
+/**
+ * @brief finds maximum value in array
  *
- * @param arr Input array
- * @param length Length of the array
+ * Given an array of data and a length, returns the maximum value
  *
- * @return mean value of the given array
+ * @param array - Data array to find maximum
+ *
+ * @return the maximum of array
  */
- 
- char find_mean(unsigned char arr[], int length);
- 
- /**
- * @brief Find the maximum value and return the same
- *  
- * The function takes the array and length input and calculates the maximum value of the given array values
+
+unsigned char find_maximum(unsigned char *array, int length);
+
+
+/**
+ * @brief finds minimum value in array
  *
- * @param arr Input array
- * @param length Length of the array
+ * Given an array of data and a length, returns the minimum value
  *
- * @return maximum value of the given array
+ * @param array - Data array to find minimum
+ *
+ * @return the minimum of array
  */
- 
- char find_maximum(unsigned char arr[], int length);
- 
- /**
- * @brief Find the minimum value and return the same
- *  
- * The function takes the array and length input and calculates the minimum value of the given array values
+
+unsigned char find_minimum(unsigned char *array, int length);
+
+
+/**
+ * @brief finds minimum value in array
  *
- * @param arr Input array
- * @param length Length of the array
+ * Given an array of data and a length, returns the minimum value
  *
- * @return minimum value of the given array
+ * @param array - Data array to find minimum
+ *
+ * @return the minimum of array
  */
- 
- char find_minimum(unsigned char arr[], int length);
- 
- /**
- * @brief Sorts the given array in descending order
- *  
- * The function takes the array and length input and sorts the values from largest to smallest
+
+unsigned char find_minimum(unsigned char *array, int length);
+
+
+/**
+ * @brief Sorts array from largest to smallest
  *
- * @param arr Input array
- * @param length Length of the array
+ * Given an array of data and a length, sorts array from largest to smallest
+ * Element 0 is largest value, last element in the array is the smallest value
  *
- * @return void
+ * @param array - Data array to sort
+ *
+ * @return the sorted array
  */
- 
- void sort_array(unsigned char* arr, int length);
- 
+
+unsigned char* sort_array(unsigned char *array, int length);
+
+
 #endif /* __STATS_H__ */
-

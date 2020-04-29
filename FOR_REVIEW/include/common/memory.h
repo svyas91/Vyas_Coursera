@@ -15,102 +15,12 @@
  * This header file provides an abstraction of reading and
  * writing to memory via function calls. 
  *
- * @author Jeevaraam Kumar
- * @date April 28 2020
+ * @author Alex Fosdick
+ * @date April 1 2017
  *
  */
-
-#include <stdint.h>
-#include <stddef.h>
-#include <stdlib.h>
-
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
-
-/**
- * @brief Moves the specified data from one memory to another memory 
- *
- * Handles memory corruption
- *
- * @param src Pointer to data source
- * @param dst Pointer to data destination
- * @param length Length of the data to be moved
- *
- * @return Pointer of destination address
- */
-uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);
-
-/**
- * @brief Moves the specified data from one memory to another memory 
- *
- * DO not handle memory corruption
- *
- * @param src Pointer to data source
- * @param dst Pointer to data destination
- * @param length Length of the data to be moved
- *
- * @return Pointer of destination address
- */
-uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
-
-/**
- * @brief Sets the values of given address to value for given length 
- *
- * Sets the values at specific addresses to given value
- *
- * @param src Pointer to data source
- * @param length Length for which the data to be initialized to value
- * @param value Value to which the addresses should be initialized
- *
- * @return Pointer of destination address
- */
-uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
-
-/**
- * @brief Sets the values of given address to zero for given length 
- *
- * Sets the values at specific addresses to zero
- *
- * @param src Pointer to data source
- * @param length Length for which the data to be initialized to zero
- *
- * @return Pointer of destination address
- */
-uint8_t * my_memzero(uint8_t * src, size_t length);
-
-/**
- * @brief Reverses the value in the given address and length 
- *
- * Reverse the data in the given address for given length
- *
- * @param src Pointer to data source
- * @param length Length for which the data to be reversed
- *
- * @return Pointer of destination address
- */
-uint8_t * my_reverse(uint8_t * src, size_t length);
-
-/**
- * @brief Allocates memory for the given length 
- *
- * Allocates the memory for the given length
- *
- * @param length Length for which the data to be reserved
- *
- * @return Pointer of destination address
- */
-int32_t * reserve_words(size_t length);
-
-/**
- * @brief Deallocates the memory given at the location 
- *
- * Deallocates the memory at the given memory location
- *
- * @param src Address of the location where memory has to be deallocated
- *
- * @return void
- */
-void free_words(uint32_t * src);
 
 /**
  * @brief Sets a value of a data array 
@@ -120,7 +30,7 @@ void free_words(uint32_t * src);
  *
  * @param ptr Pointer to data array
  * @param index Index into pointer array to set value
- * @param value value to write the the location
+ * @param value value to write the the locaiton
  *
  * @return void.
  */
@@ -179,5 +89,23 @@ void set_all(char * ptr, char value, unsigned int size);
  * @return void.
  */
 void clear_all(char * ptr, unsigned int size);
+
+/**********************************************/
+
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);
+
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
+
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
+
+uint8_t * my_memzero(uint8_t * src, size_t length);
+
+uint8_t * my_reverse(uint8_t * src, size_t length);
+
+int32_t * reserve_words(size_t length);
+
+void free_words(uint32_t * src);
+
+
 
 #endif /* __MEMORY_H__ */
