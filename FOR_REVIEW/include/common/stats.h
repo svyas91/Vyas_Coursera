@@ -1,132 +1,122 @@
 /******************************************************************************
- * Copyright (C) 2017 by Alex Fosdick - University of Colorado
+ * Copyright (C) 2020 Ioannis Fokianos
  *
  * Redistribution, modification or use of this software in source or binary
  * forms is permitted as long as the files maintain this copyright. Users are 
- * permitted to modify this and use it to learn about the field of embedded
- * software. Alex Fosdick and the University of Colorado are not liable for any
- * misuse of this material. 
+ * permitted to modify this and use it.
  *
  *****************************************************************************/
 /**
- * @file <Add File Name> 
- * @brief <Add Brief Description Here >
+ * @file stats.h 
+ * @brief Contains the function declarations that are needed to perform 
+ *        statisitc operations in the stats.c file
  *
- * <Add Extended Description Here>
- *
- * @author <Add FirsName LastName>
- * @date <Add date >
+ * @author Ioannis Fokianos
+ * @date 08/03/2020
  *
  */
 #ifndef __STATS_H__
 #define __STATS_H__
 
+// Compile time switch for printing the original array
+#if defined (PRINT)
+#include <stdio.h>
+#define PRINTF(...) printf(__VA_ARGS__)
+#endif
+
 /* Add Your Declarations and Function Comments here */ 
 
 /**
- * @brief Prints out statistics of data array 
+ * @brief Mean value of an array
  *
- * Prints out minimum, maximum, mean and median for the elements
- * in the data array input
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and returns the mean value.
  *
- * @param array - Data array to be analyzed.
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @return none.
+ * @return unsigned char mean value
  */
-void print_statistics( unsigned char *array, int length);
+unsigned char find_mean(unsigned char *array,int N);
 
 /**
- * @brief Prints out elements of data array 
+ * @brief Maximum value of an array
  *
- * Given an array of data and a length, prints the array to the screen
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and returns the maximum value.
  *
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @param array - Data array to be printed.
- *
- * @return none.
+ * @return unsigned char max value
  */
-
-void print_array(unsigned char *array, int length);
-
+unsigned char find_maximum(unsigned char *array, int N);
 
 /**
- * @brief Calculates median of array
+ * @brief Minimum value of an array
  *
- * Given an array of data and a length, returns the median value
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and returns the minimum value.
  *
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @param array - Data array for which median will be calculated
- *
- * @return median value
+ * @return unsigned char min value
  */
-
-unsigned char find_median(unsigned char *array, int length);
-
+unsigned char find_minimum(unsigned char *array, int N);
 
 /**
- * @brief Calculates mean of array
+ * @brief Median value of an array
  *
- * Given an array of data and a length, returns the mean value
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and sorts the array and then returns the median value.
  *
- * @param array - Data array for which mean will be calculated
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @return mean value
+ * @return unsigned char median value
  */
-
-unsigned char find_mean(unsigned char *array, int length);
-
+unsigned char find_median(unsigned char *array, int N);
 
 /**
- * @brief finds maximum value in array
+ * @brief Descending sort
  *
- * Given an array of data and a length, returns the maximum value
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and sorts the array in a descending manner.
  *
- * @param array - Data array to find maximum
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @return the maximum of array
+ * @return void
  */
-
-unsigned char find_maximum(unsigned char *array, int length);
-
+void sort_array(unsigned char *array, int N);
 
 /**
- * @brief finds minimum value in array
+ * @brief Print array
  *
- * Given an array of data and a length, returns the minimum value
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and prints each element of the array with its respective index.
  *
- * @param array - Data array to find minimum
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @return the minimum of array
+ * @return void
  */
-
-unsigned char find_minimum(unsigned char *array, int length);
-
+void print_array(unsigned char *array,int N);
 
 /**
- * @brief finds minimum value in array
+ * @brief Print array statistics
  *
- * Given an array of data and a length, returns the minimum value
+ * This function takes as an input a pointer to the first element of 
+ * an unsigned char array and the size of the array and prints the min, max, mean and median values.
  *
- * @param array - Data array to find minimum
+ * @param unsigned char * array array pointer
+ * @param int N array size
  *
- * @return the minimum of array
+ * @return void
  */
+void print_statistics(unsigned char *array,int N);
 
-unsigned char find_minimum(unsigned char *array, int length);
-
-
-/**
- * @brief Sorts array from largest to smallest
- *
- * Given an array of data and a length, sorts array from largest to smallest
- * Element 0 is largest value, last element in the array is the smallest value
- *
- * @param array - Data array to sort
- *
- * @return the sorted array
- */
-
-unsigned char* sort_array(unsigned char *array, int length);
 
 
 #endif /* __STATS_H__ */
