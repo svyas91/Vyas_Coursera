@@ -20,110 +20,100 @@
 # Platform Overrides:
 #      <Put a description of the supported Overrides here
 #
-# Course : Decides which COURSE to compile and build the project. Available options COURSE=COURSE1
-# VERBOSE : Decides compile, build debug. Available options : 1/0
 #------------------------------------------------------------------------------
+# This includes sources files and include files.
 include sources.mk
 
-# Makefile Flags
-OBJDIR := output
-OBJS=$(SOURCES:.c=.o)
-# Platform Overrides & Architecture Specific Flags
-#LINKER_FILE CPU ARCH SPECS
-######## Compiler Flags and Defines###############
+# Define the target name.
+TARGET = c1m2
+	
+# General Flags for both platform
+FLAGS = -Wall       \
+        -Werror     \
+        -g          \
+        -std=c99    \
+        -O0         \
+        $(INCLUDES) \
+
+# Platform Overrides
+PLATFORM ?= HOST
+
+# Architectures Specific Flags
+LINKER_FILE = ../msp432p401r.lds
+CPU = cortex-m4
+ARCH = armv7e-m
+SPECS = nosys.specs
+FPFLAGS = -mfloat-abi=hard -mfpu=fpv4-sp-d16
+
+# C-Preprocessor Flags
+CPPFLAGS = -D$(PLATFORM)
+
+# Print array compile time switch 
+PRINT_ARRAY = -D$(ARRAY)
+
+ifeq ($(ARRAY),PRINT)
+ifeq ($(PLATFORM),HOST)
+CFLAGS = $(CPPFLAGS) $(FLAGS) $(PRINT_ARRAY)
+endif
+endif
+# Compiler Flags and Defines
+ifeq ($(PLATFORM),HOST)
+ifneq ($(ARRAY),PRINT)
+	CC = gcc
+	LD= ld
+	LDFLAGS = -Wl,-Map=$(TARGET).map
+	CFLAGS = $(CPPFLAGS) $(FLAGS) 
+endif
+endif
 
 ifeq ($(PLATFORM),MSP432)
-CPU = cortex-m4
-ARCH = arm
-LINKER_FILE = msp432p401r.lds
-CC = arm-none-eabi-gcc
-CFLAGS = -g -Wall -Werror -O0 -std=c99
-LDFLAGS = -mcpu=cortex-m4 -mthumb -march=armv7e-m -mfloat-abi=hard \
-	-mfpu=fpv4-sp-d16 --specs=nosys.specs \
-	-T$(LINKER_FILE) -D$(PLATFORM) 
-TARGET = MSP432
-COBJD = arm-none-eabi-objdump
+	CC = arm-none-eabi-gcc
+	LD = arm-none-eabi-ld
+	LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE)
+	CFLAGS = $(CPPFLAGS) $(FLAGS) -mcpu=$(CPU) -mthumb -march=$(ARCH) $(FPFLAGS) --specs=$(SPECS) 
 endif
 
-ifeq ($(PLATFORM),HOST)
-ARCH = $(shell arch)
-TARGET = DHOST
-CC =gcc
-CFLAGS = -g -Wall -Werror -O0 -std=c99 \
-	-D$(PLATFORM) 
-SOURCES:= ./src/main.c ./src/memory.c ./src/stats.c \
-	./src/course1.c ./src/data.c 
-OBJS=$(SOURCES:.c=.o)
-COBJD = objdump
-endif
+# Preprocessed output
+PREPS = $(SOURCES:.c=.i)
 
-ifeq ($(VERBOSE), 1)
-CFLAGS += -DVERBOSE
-endif
-#Set default to 1
-COURSE ?=1
-ifeq ($(COURSE), 1)
-CFLAGS += -DCOURSE1
-endif
-
-####################################################
-# Generates an Object directory to place objects in
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
-####################################################
-
-################ General Implementation #############
-%.o : %.c
-	@echo ===============================
-	@echo Generating .o files
-	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ -c $<
-##################################################
-
-################ ASM FIle #############
-%.asm : %.c
-	@echo ===============================
-	@echo Generating ASM files
-	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ -c $< -S
-##################################################
-
-################ ASM FIle for Project.out #############
-%.asm : %.out
-	@echo ===============================
-	@echo Generating ASM files for Project.out
-	$(COBJD) -S --disassemble c1m2.out > c1m2.asm
-##################################################
-
-################ Process File Implementation #############
 %.i : %.c
-	@echo ==============================
-	@echo Generating .o files
-	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o $@ -c $< -E
-##################################################
+	$(CC) -E $< $(CPPFLAGS) $(INCLUDES) -o $@
 
-################ Compile All Impl #############
+# Assembly output 
+ASSES = $(SOURCES:.c=.asm)
+
+%.asm : %.c
+	$(CC) -S $< $(CFLAGS) -o $@
+
+# Object output, also output dependency file -MD 
+OBJS = $(SOURCES:.c=.o)
+
+%.o : %.c
+	$(CC) -c $< -MD $(CFLAGS) -o $@
+
+%.out : %.c
+	$(CC) $< -o $@ $(CFLAGS) 
+
 .PHONY: compile-all
-compile-all:  
-	@echo ===============================
-	@echo Generating .o files
-	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -c $(SOURCES)
-##################################################
+compile-all: $(SOURCES)
+	$(CC) -c $^ -MD $(CFLAGS)
 
-################ MAKE AND BUILD ALL  #############
 .PHONY: build
-build: all 
-.PHONY: all 
-all: c1m2.out
-c1m2.out: $(OBJS)  
-	@echo ==============================
-	@echo Building/Making All
-	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) -o c1m2.out $(OBJS)  -lm -Wl,-Map=c1m2.map
-##################################################
+build: $(TARGET).out
 
+$(TARGET).out: $(OBJS)
+	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
+# generate size report and dump assembly from machine code
+ifeq ($(PLATFORM),HOST)
+	size -Atd $@
+	objdump -d $@
+endif
+ifeq ($(PLATFORM),MSP432)
+	arm-none-eabi-size -Atd $@
+	arm-none-eabi-objdump -d $@
+endif
 
-################ Compile All Impl #############
-.PHONY: clean 
-clean:  
-	@echo ===============================
-	@echo Cleaning the directory 
-	rm -rf ./src/*.o src/*.map ./src/*.i ./src/*.asm src/*.out *.o *.out *.map 
-##################################################
+.PHONY: clean
+clean:
+	# rm -f -v $(OBJS) $(PREPS) $(ASSES) $(TARGET).out $(TARGET).map *.d
+	rm -f -v *.out $(TARGET).map *.i *.asm *.o *.d 

@@ -6,14 +6,48 @@
 # permitted to modify this and use it to learn about the field of embedded
 # software. Alex Fosdick and the University of Colorado are not liable for any
 # misuse of this material. 
-#
+# 
 #*****************************************************************************
 
+#******************************************************************************
+# @file sources.mk
+# @brief define the paths of source files and inclue files.
+#
+# @author MD Huang
+# @date 2020-03-16
+# 
+#*****************************************************************************
+# Platform Overrides
+PLATFORM ?= HOST
+
 # Add your Source files to this variable
-SOURCES:= ./src/main.c ./src/memory.c ./src/interrupts_msp432p401r_gcc.c ./src/startup_msp432p401r_gcc.c ./src/system_msp432p401r.c ./src/stats.c ./src/course1.c ./src/data.c 
+#SOURCES = main.c\
+#          memory.c\
+#          startup_msp432p401r_gcc.c\
+#          interrupts_msp432p401r_gcc.c\
+#          system_msp432p401r.c
+
+ifeq ($(PLATFORM),HOST)
+	SOURCES = main.c\
+              memory.c\
+			  stats.c
+endif
+ifeq ($(PLATFORM), MSP432)
+	SOURCES = main.c\
+              memory.c\
+              startup_msp432p401r_gcc.c\
+              interrupts_msp432p401r_gcc.c\
+              system_msp432p401r.c
+endif
 
 # Add your include paths to this variable
-INCLUDES :=  -I ./include/common \
-            -I ./include/CMSIS \
-            -I ./include/msp432 \
-
+ifeq ($(PLATFORM),HOST)
+	INCLUDES = -I../include/common
+	        
+endif
+ifeq ($(PLATFORM), MSP432)
+	INCLUDES = -I../include/CMSIS  \
+	           -I../include/common \
+	           -I../include/msp432
+endif
+ 
