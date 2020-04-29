@@ -10,26 +10,18 @@
  *****************************************************************************/
 /**
  * @file main.c
- * @brief Main entry point to the C1 Final Assessment
+ * @brief Main entry point to the Course1 Final Assessment
+ * 
  *
- * This file contains the main code for the C1 Final assessment. 
- *
- * @author Jeevaraam Kumar
- * @date April 28 2020
+ * @author Karthik
+ * @date April 26. 2020
  *
  */
- 
-#include <stdint.h>
 #include "course1.h"
 
-#define MAX_LENGTH (10)
-char buffer[MAX_LENGTH];
-
-/* A pretty boring main file */
-int main(void) {
-  #ifdef COURSE1
-   course1();
-  #endif
-  return 0;
-}
-
+ int main(void) {
+    #ifdef COURSE1
+    course1();
+    #endif
+    return 0;
+ }
