@@ -16,13 +16,25 @@
  * @date April 2, 2017
  *
  */
-#include <math.h>
+
 #include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "course1.h"
 #include "platform.h"
 #include "memory.h"
 #include "data.h"
 #include "stats.h"
+
+int main(void){
+
+  int8_t ret = test_memmove1();
+
+  printf("result: %c\n",ret);
+
+  return 0;
+}
 
 int8_t test_data1() {
   uint8_t * ptr;
@@ -297,12 +309,14 @@ int8_t test_reverse()
                                };
 
   PRINTF("test_reverse()\n");
-  copy = (uint8_t*)reserve_words(MEM_SET_SIZE_B);
+  copy = (uint8_t*)reserve_words(MEM_SET_SIZE_W);
   if (! copy )
   {
     return TEST_ERROR;
   }
+  
   my_memcopy(set, copy, MEM_SET_SIZE_B);
+
   print_array(set, MEM_SET_SIZE_B);
   my_reverse(set, MEM_SET_SIZE_B);
   print_array(set, MEM_SET_SIZE_B);
@@ -316,7 +330,6 @@ int8_t test_reverse()
   }
 
   free_words( (uint32_t*)copy );
-
   return ret;
 }
 
@@ -336,7 +349,7 @@ void course1(void)
   results[7] = test_reverse();
 
   for ( i = 0; i < TESTCOUNT; i++) 
-  { 
+  {
     failed += results[i];
   }
 

@@ -16,19 +16,17 @@
  * writing to memory via function calls. There is also a globally
  * allocated buffer array used for manipulation.
  *
- * @author Karthik Shankar
- * @date April 26 2020
+ * @author Alex Fosdick
+ * @date April 1 2017
  *
  */
-#include "stdint.h"
-#include "stddef.h"
-#include "stdlib.h"
-#include "stdio.h"
 #include "memory.h"
+#include <stdint.h>
 
 /***********************************************************
  Function Definitions
 ***********************************************************/
+
 void set_value(char * ptr, unsigned int index, char value){
   ptr[index] = value;
 }
@@ -52,70 +50,81 @@ void clear_all(char * ptr, unsigned int size){
   set_all(ptr, 0, size);
 }
 
-/**********************************************
-*   New Functions  
-***********************************************/
-
-
-int32_t * reserve_words(size_t length){
-	  
-    int32_t *ptr1;
-    ptr1 = (int32_t*)malloc(length*sizeof(int32_t));  
-    return ptr1;
-}
-
-void free_words(uint32_t * src){
-    free((void *) src);
-}
-
-uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
-  uint8_t *tmp = (uint8_t*)malloc(length*sizeof(uint8_t));
-  int i;
-  for( i =0; i<length; i++){
-    *(tmp+i) = *(src+i); 
-  }
-  for(i=0; i<length; i++){
-    *(dst+i) = *(tmp + i);
-  }
-  free (tmp);
-  return dst;
-}
-
 uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length){
-    int i;
-    
-    for(i = 0; i < length; i++){
-    *(dst+ i) = *(src + i);
-    }
-    
-    return dst;
+
+	long int address_diff = (dst-src)*sizeof(uint8_t);
+
+	if(length>address_diff){
+		for(int i=length-1;i>=0;i--){
+			*(dst+i)=*(src+i);
+		}
+	}
+	else{
+		for(int i=0;i<length;i++){
+			*(dst+i) = *(src+i);
+			}
+		}
+	return dst;  
+}
+
+//TODO: Consider overlap between source and destination
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
+
+	long int address_diff = (dst-src)*sizeof(uint8_t);
+
+	if(length>address_diff){
+		for(int i=length-1;i>=0;i--){
+			*(dst+i)=*(src+i);
+		}
+	}
+	else{
+		for(int i=0;i<length;i++){
+			*(dst+i) = *(src+i);
+			}
+			free((int32_t*) src);
+		}
+	//uint8_t * ptr = (uint8_t*) realloc(src,(length-1));
+	return dst;
 }
 
 uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value){
-  for(int i =0; i<length; i++){
-     *(src+i) = value;
+
+  for(int i=0;i<length;i++){
+    *(src+i) = value;
   }
   return src;
 }
- 
+
 uint8_t * my_memzero(uint8_t * src, size_t length){
-  for(int i =0; i<length; i++){
-     *(src+i) = 0;
+
+  for(int i=0;i<length;i++){
+    *(src+i) = 0;
   }
   return src;
 }
 
 uint8_t * my_reverse(uint8_t * src, size_t length){
 
-  int temp;
-  int temp_length = (int) length-1; 
-  for(int i =0; i<length/2; i++){
+  uint8_t temp;
+  for(int i=0;i<length;i++){
+    if(i >= (length-1)-i){
+      break;
+    }
     temp = *(src+i);
-    *(src+i) = *(src+temp_length);
-    *(src+temp_length) = temp;
-    temp_length--; 
+    *(src+i) = *(src+(length-1)-i);
+    *(src+(length-1)-i) = temp;
   }
-
   return src;
 }
 
+int32_t * reserve_words(size_t length){
+
+	int32_t * ptr;
+	ptr = (int32_t*) malloc(length);
+	return ptr;
+
+}
+
+void free_words(int32_t * src){
+  free(src);
+}
